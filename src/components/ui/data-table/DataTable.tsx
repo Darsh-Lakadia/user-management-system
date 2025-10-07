@@ -3,6 +3,7 @@ import type {
   ColumnFiltersState,
   SortingState,
   VisibilityState,
+  Table,
 } from "@tanstack/react-table";
 import {
   flexRender,
@@ -18,8 +19,9 @@ import { DataTablePagination } from "./DataTablePagination";
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  toolbar?: ReactNode;
+  toolbar?: ReactNode | ((table: Table<TData>) => ReactNode);
   emptyMessage?: string;
+  isLoading?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -27,10 +29,12 @@ export function DataTable<TData, TValue>({
   data,
   toolbar,
   emptyMessage = "No results",
+  isLoading = false,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [globalFilter, setGlobalFilter] = useState<string>("");
 
   const table = useReactTable({
     data,
@@ -39,10 +43,12 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
       columnVisibility,
+      globalFilter,
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -51,7 +57,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full space-y-4">
-      {toolbar}
+      {typeof toolbar === "function" ? toolbar(table) : toolbar}
       <div className="w-full overflow-x-auto rounded-lg border border-line bg-card">
         <table className="w-full text-left text-sm">
           <thead className="bg-muted/30">
@@ -74,7 +80,15 @@ export function DataTable<TData, TValue>({
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.length ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-12 text-center">
+                  <div>
+                    <span className="text-muted-foreground">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+            ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}

@@ -6,3 +6,7 @@ export { DataTable } from './data-table/DataTable';
 export { DataTableToolbar } from './data-table/DataTableToolbar';
 export { DataTableColumnHeader } from './data-table/DataTableColumnHeader';
 export { DataTablePagination } from './data-table/DataTablePagination';
+export { Modal } from './Modal';
+export type { ModalProps } from './Modal';
+export { Select } from './Select';
+export type { SelectProps } from './Select';

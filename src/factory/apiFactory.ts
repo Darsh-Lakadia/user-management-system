@@ -8,6 +8,7 @@ export const authAPIKeys = {
 
 export const usersAPIKeys = {
   users: '/users',
+  userById: (id: string) => `/users/${id}`,
 } as const;
 
 export const apiEndpoints = {

@@ -8,3 +8,11 @@ export interface User {
 }
 
 export type UsersResponse = User[];
+
+export interface UserRequest {
+  name: string;
+  email: string;
+  role: string;
+  password?: string;
+  avatar: string;
+}

@@ -25,7 +25,15 @@ export function DataTableColumnHeader<TData, TValue>({
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => column.toggleSorting(sorted === "asc")}
+        onClick={() => {
+          if (sorted === "asc") {
+            column.toggleSorting(true);
+          } else if (sorted === "desc") {
+            column.clearSorting();
+          } else {
+            column.toggleSorting(false);
+          }
+        }}
         className="-ml-2 px-2 py-1"
       >
         <span className="mr-2 font-medium">{title}</span>

@@ -36,26 +36,17 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log(
-      `API Response: ${response.config.method?.toUpperCase()} ${
-        response.config.url
-      }`,
-      response.data
-    );
     return response;
   },
   (error: AxiosError) => {
     console.error("Response Error:", error);
 
     if (error.response) {
-      const { status, data } = error.response;
-      console.log('DATA ERROR', data);
-      toast.error((data as any).message as string || "Session expired. Please login again.");
+      const { data } = error.response;
+      toast.error((data as any).message as string || "An unexpected error occurred.");
     } else if (error.request) {
-      // Network error
       toast.error("Network error. Please check your connection.");
     } else {
-      // Something else happened
       toast.error("An unexpected error occurred.");
     }
 

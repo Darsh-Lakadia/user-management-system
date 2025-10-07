@@ -1,10 +1,10 @@
+import UsersTable from "../components/ui/users-table/UsersTable";
 
 const Users = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Users Page</h1>
-        <p className="text-lg text-gray-600">Manage your users here</p>
+    <div className="w-full px-4 py-6 md:px-8">
+      <div className="mx-auto w-full space-y-4">
+        <UsersTable />
       </div>
     </div>
   );
