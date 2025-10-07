@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --bg: theme(colors.gray.50);
+  --fg: theme(colors.slate.900);
+  --muted: theme(colors.slate.500);
+  --primary: theme(colors.indigo.600);
+  --card: theme(colors.white);
+  --border: theme(colors.gray.200);
+}
+
+.dark {
+  --bg: theme(colors.gray.950);
+  --fg: theme(colors.gray.200);
+  --muted: theme(colors.gray.400);
+  --primary: theme(colors.indigo.600);
+  --card: theme(colors.gray.900);
+  --border: theme(colors.gray.700);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+}
+
+@layer utilities {
+  .bg-background { background-color: var(--bg); }
+  .bg-card { background-color: var(--card); }
+  .bg-primary { background-color: var(--primary); }
+
+  .text-foreground { color: var(--fg); }
+  .text-muted { color: var(--muted); }
+  .text-primary { color: var(--primary); }
+
+  .border-line { border-color: var(--border); }
+  .ring-primary { --tw-ring-color: var(--primary); }
+}
